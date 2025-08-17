@@ -4,10 +4,10 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && npm run postbuild",
+    "dev": "vite --config vite.config.js --root client",
+    "build": "vite build --config vite.config.js --root client && npm run postbuild",
     "postbuild": "cp dist/index.html dist/404.html",
-    "preview": "vite preview",
+    "preview": "vite preview --config vite.config.js --root client",
     "check": "tsc"
   },
   "dependencies": {
