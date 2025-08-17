@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "cp dist/index.html dist/404.html"
-    "build:gh-pages": "cross-env NODE_ENV=production vite build",
+    "postbuild": "cp dist/index.html dist/404.html",
+    "build:gh-pages": "cross-env NODE_ENV=production vite build && npm run postbuild",
     "preview": "vite preview",
     "check": "tsc"
   },
