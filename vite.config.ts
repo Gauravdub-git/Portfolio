@@ -3,17 +3,23 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  root: "client", // 👈 now Vite knows where index.html is
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client", "src"),
-      "@assets": path.resolve(__dirname, "attached_assets"),
+      "@": path.resolve(import.meta.dirname, "client", "src"),
+      "@assets": path.resolve(import.meta.dirname, "attached_assets"),
     },
   },
-  base: "/Portfolio/", // 👈 repo name
+  root: path.resolve(import.meta.dirname, "client"),
+  base: process.env.NODE_ENV === "production" ? "/GauravPortfolio/" : "/",
   build: {
-    outDir: "../dist", // 👈 output goes to root /dist
+    outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+  },
+  server: {
+    fs: {
+      strict: true,
+      deny: ["**/.*"],
+    },
   },
 });
