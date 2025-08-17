@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   root: path.resolve(import.meta.dirname, "client"),
-  base: process.env.NODE_ENV === "production" ? "/GauravPortfolio/" : "/",
+  base: process.env.NODE_ENV === "production" ? "/Portfolio/" : "/",
   build: {
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
