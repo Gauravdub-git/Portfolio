@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -7,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
 
 const contactSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -32,92 +30,48 @@ export default function Contact() {
     resolver: zodResolver(contactSchema),
   });
 
-  const contactMutation = useMutation({
-    mutationFn: async (data: ContactForm) => {
-      return apiRequest("POST", "/api/contact", data);
-    },
-    onSuccess: () => {
+  const onSubmit = async (data: ContactForm) => {
+    setIsSubmitting(true);
+    
+    try {
+      // Create email content
+      const subject = encodeURIComponent(data.subject);
+      const body = encodeURIComponent(`
+Name: ${data.firstName} ${data.lastName}
+Email: ${data.email}
+
+Message:
+${data.message}
+      `);
+      
+      // Open email client
+      const mailtoLink = `mailto:dubey.gauravv@gmail.com?subject=${subject}&body=${body}`;
+      window.open(mailtoLink, '_blank');
+      
       toast({
-        title: "Message sent successfully!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
+        title: "Email client opened!",
+        description: "Your email client should open with a pre-filled message. Please send the email to complete the process.",
       });
       reset();
-      setIsSubmitting(false);
-    },
-    onError: (error: any) => {
+    } catch (error) {
       toast({
-        title: "Error sending message",
-        description: error.message || "Something went wrong. Please try again.",
+        title: "Error opening email client",
+        description: "Please email me directly at dubey.gauravv@gmail.com",
         variant: "destructive",
       });
+    } finally {
       setIsSubmitting(false);
-    },
-  });
-
-  const onSubmit = (data: ContactForm) => {
-    setIsSubmitting(true);
-    contactMutation.mutate(data);
+    }
   };
 
   const downloadResume = () => {
-    // Create a simple text version of the resume for download
-    const resumeContent = `
-GAURAV DUBEY
-Rewa, Madhya Pradesh
-+91-6268796612 | dubey.gauravv@gmail.com
-
-SUMMARY
-Passionate Computer Science and Engineering graduate with experience in web development and AI applications. Looking for opportunities to leverage my skills in programming, problem solving, and project management to contribute to innovative projects and enhance my professional growth.
-
-EDUCATION
-Rewa Engineering College, Rewa (2021 – 2025)
-B.Tech in Computer Science and Engineering
-Rewa, Madhya Pradesh
-
-TECHNICAL SKILLS
-• Programming Languages: C++, C, Python
-• Web Development: MERN Stack (MongoDB, Express.js, React.js, Node.js), HTML, CSS, JavaScript
-• Core CS Concepts: Data Structures, DBMS, OOP, Operating Systems
-• Other Technologies: Git, GitHub, VS Code, RESTful APIs, AWS, Agile
-
-PROJECTS
-1. Potato Disease Classification
-   - CNN, FastAPI, Streamlit, TensorFlow
-   - Developed image classification model with 95%+ accuracy
-   
-2. Doctor Appointment System
-   - MERN Stack, Node.js, MongoDB, React.js
-   - Full-stack healthcare web app with role-based dashboards
-   
-3. StudyNotion
-   - Interactive EdTech Learning Platform
-   - Dynamic course management with cloud storage integration
-
-INTERNSHIP EXPERIENCE
-TechSaksham - AICTE Internship on AI: Transformative Learning (Jan 2025 - Feb 2025)
-Disease Outbreak Prediction System
-- Developed ML-based disease prediction system
-- Built interactive web application using Streamlit
-
-CERTIFICATIONS
-• Mastering Data Structures and Algorithms (Udemy)
-• Full Stack Web Development (CodeHelp)
-• C++ Programming Foundation (GeeksforGeeks)
-• 100 Days of Code: The Complete Python Pro Bootcamp (Udemy)
-
-EXTRACURRICULAR
-• Volleyball: Active player in college tournaments
-• E-Cell Club: Organized workshops and events to encourage entrepreneurship
-`;
-
-    const blob = new Blob([resumeContent], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
+    // Create a link to the PDF resume
     const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Gaurav_Dubey_Resume.txt';
+    a.href = '/attached_assets/Gaurav_Dubey_Resume.pdf';
+    a.download = 'Gaurav_Dubey_Resume.pdf';
+    a.target = '_blank';
     document.body.appendChild(a);
     a.click();
-    window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
   };
 
@@ -202,8 +156,8 @@ EXTRACURRICULAR
                   </label>
                   <Input
                     {...register("firstName")}
-                    placeholder="John"
-                    className={errors.firstName ? "border-red-500" : ""}
+                    placeholder=""
+                    className={`border-2 border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none ${errors.firstName ? "border-red-500" : ""}`}
                   />
                   {errors.firstName && (
                     <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
@@ -215,8 +169,8 @@ EXTRACURRICULAR
                   </label>
                   <Input
                     {...register("lastName")}
-                    placeholder="Doe"
-                    className={errors.lastName ? "border-red-500" : ""}
+                    placeholder=""
+                    className={`border-2 border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none ${errors.lastName ? "border-red-500" : ""}`}
                   />
                   {errors.lastName && (
                     <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
@@ -231,8 +185,8 @@ EXTRACURRICULAR
                 <Input
                   {...register("email")}
                   type="email"
-                  placeholder="john.doe@example.com"
-                  className={errors.email ? "border-red-500" : ""}
+                  placeholder=""
+                  className={`border-2 border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none ${errors.email ? "border-red-500" : ""}`}
                 />
                 {errors.email && (
                   <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -245,8 +199,8 @@ EXTRACURRICULAR
                 </label>
                 <Input
                   {...register("subject")}
-                  placeholder="Project Collaboration"
-                  className={errors.subject ? "border-red-500" : ""}
+                  placeholder=""
+                  className={`border-2 border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none ${errors.subject ? "border-red-500" : ""}`}
                 />
                 {errors.subject && (
                   <p className="text-red-500 text-sm mt-1">{errors.subject.message}</p>
@@ -260,8 +214,8 @@ EXTRACURRICULAR
                 <Textarea
                   {...register("message")}
                   rows={5}
-                  placeholder="Tell me about your project or opportunity..."
-                  className={`resize-none ${errors.message ? "border-red-500" : ""}`}
+                  placeholder=""
+                  className={`resize-none border-2 border-gray-300 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none ${errors.message ? "border-red-500" : ""}`}
                 />
                 {errors.message && (
                   <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
@@ -280,7 +234,7 @@ EXTRACURRICULAR
                   </>
                 ) : (
                   <>
-                    Send Message <i className="fas fa-paper-plane ml-2"></i>
+                    Send Email <i className="fas fa-envelope ml-2"></i>
                   </>
                 )}
               </Button>
@@ -300,7 +254,7 @@ EXTRACURRICULAR
               className="bg-white text-primary hover:bg-blue-50 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
             >
               <i className="fas fa-download mr-2"></i>
-              Download Resume (TXT)
+              Download Resume (PDF)
             </Button>
           </div>
         </div>

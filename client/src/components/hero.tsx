@@ -49,12 +49,43 @@ export default function Hero() {
             </div>
           </div>
           
-          <div className="flex justify-center animate-float">
+                    <div className="flex justify-center animate-float">
             <div className="relative">
-              <div className="w-80 h-80 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white text-6xl font-bold shadow-2xl">
-                <i className="fas fa-user-tie"></i>
+              {/* Main Profile Photo */}
+              <div className="w-80 h-80 rounded-full overflow-hidden shadow-2xl border-4 border-white relative z-10">
+                <img 
+                  src="/attached_assets/profile-photo.jpg" 
+                  alt="Gaurav Dubey - Full Stack Developer" 
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full animate-pulse"></div>
+              
+              {/* Decorative Background Elements */}
+              <div className="absolute inset-0 w-80 h-80 rounded-full bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 opacity-20 blur-xl animate-pulse"></div>
+              
+              {/* Floating Tech Icons */}
+              <div className="absolute -top-4 -right-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center animate-bounce">
+                <i className="fab fa-react text-blue-500 text-xl"></i>
+              </div>
+              
+              <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center animate-bounce" style={{animationDelay: '0.5s'}}>
+                <i className="fab fa-python text-green-500 text-xl"></i>
+              </div>
+              
+              <div className="absolute top-1/2 -right-8 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center animate-bounce" style={{animationDelay: '1s'}}>
+                <i className="fab fa-js text-yellow-500 text-lg"></i>
+              </div>
+              
+              <div className="absolute top-1/2 -left-8 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center animate-bounce" style={{animationDelay: '1.5s'}}>
+                <i className="fas fa-database text-blue-600 text-lg"></i>
+              </div>
+              
+              {/* Connection Lines */}
+              <div className="absolute top-1/2 left-1/2 w-32 h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent transform -translate-x-16 -translate-y-px opacity-30"></div>
+              <div className="absolute top-1/2 left-1/2 w-32 h-0.5 bg-gradient-to-l from-transparent via-purple-400 to-transparent transform translate-x-16 -translate-y-px opacity-30"></div>
+              
+              {/* Status Indicator */}
+              <div className="absolute bottom-2 right-2 w-6 h-6 bg-green-400 rounded-full border-4 border-white animate-pulse"></div>
             </div>
           </div>
         </div>

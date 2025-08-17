@@ -15,12 +15,11 @@ export default function Experience() {
           <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary to-accent"></div>
           
           <div className="space-y-12">
-            {/* Current Internship */}
+            {/* Internship */}
             <div className="relative flex items-center">
               <div className="flex-1 pr-8 text-right">
                 <div className="bg-white p-6 rounded-xl shadow-lg">
                   <div className="flex items-center justify-end mb-3">
-                    <span className="bg-success text-white px-3 py-1 rounded-full text-sm font-medium mr-3">Current</span>
                     <h3 className="text-xl font-semibold text-slate-900">TechSaksham - AICTE Internship</h3>
                   </div>
                   <p className="text-slate-600 mb-2 font-medium">AI: Transformative Learning</p>
@@ -39,7 +38,7 @@ export default function Experience() {
               </div>
               
               {/* Timeline Node */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-success rounded-full border-4 border-white shadow-lg z-10"></div>
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-500 rounded-full border-4 border-white shadow-lg z-10"></div>
               
               <div className="flex-1 pl-8">
                 {/* Empty space for alternating layout */}

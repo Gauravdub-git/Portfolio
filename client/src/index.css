@@ -84,10 +84,41 @@
 
   body {
     @apply font-inter antialiased bg-background text-foreground;
+    scroll-behavior: smooth;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+  }
+
+  /* Selection styling */
+  ::selection {
+    background: rgba(59, 130, 246, 0.2);
+    color: #1e293b;
+  }
+
+  /* Focus styles */
+  *:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
   }
 }
 
