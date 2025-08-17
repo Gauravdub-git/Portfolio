@@ -4,16 +4,16 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  root: "client", // 👈 Tell Vite your app lives in /client
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "client", "src"),
       "@assets": path.resolve(__dirname, "attached_assets"),
     },
   },
-  // 👇 Base path for GitHub Pages (repo name)
-  base: "/Portfolio/",
+  base: "/Portfolio/", // 👈 repo name for GitHub Pages
   build: {
-    outDir: "dist",   // Vite default → creates /dist at project root
+    outDir: "../dist", // 👈 output dist at root (not inside client/dist)
     emptyOutDir: true,
   },
   server: {
