@@ -6,20 +6,15 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(import.meta.dirname, "client", "src"),
-      "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+      "@": path.resolve(__dirname, "client", "src"),
+      "@assets": path.resolve(__dirname, "attached_assets"),
     },
   },
-  root: path.resolve(import.meta.dirname, "client"),
+  // 👇 Base path for GitHub Pages (repo name)
   base: "/Portfolio/",
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist"),
+    outDir: "dist",   // Vite default → creates /dist at project root
     emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        main: path.resolve(import.meta.dirname, "client", "index.html"),
-      },
-    },
   },
   server: {
     fs: {
